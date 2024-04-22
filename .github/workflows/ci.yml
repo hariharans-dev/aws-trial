@@ -1,0 +1,20 @@
+name: CIPIPELINE
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Login to Docker Hub
+              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+            - name: Build the docker image
+              run: dokcer build -t hariharansdeveloper/aws_trial:latest .
+            - name: push to dokcer hub
+              run: docker push hariharansdeveloper/aws_trial:latest
